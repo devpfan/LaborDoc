@@ -1,0 +1,135 @@
+<div class="dashboard-container">
+  <div class="welcome-section">
+    <h2>Bienvenido al Gestor de Labor Docente</h2>
+    <p>Sistema de optimización para la asignación de docentes por niveles - Proyección 2026</p>
+  </div>
+
+  <div class="info-cards" *ngIf="estadisticas">
+    <div class="info-card primary">
+      <div class="icon">👥</div>
+      <div class="content">
+        <h3>{{ estadisticas.total_docentes }}</h3>
+        <p>Docentes Registrados</p>
+        <small>{{ estadisticas.docentes_primaria }} Primaria | {{ estadisticas.docentes_bachillerato }} Bachillerato</small>
+      </div>
+    </div>
+
+    <div class="info-card success">
+      <div class="icon">📚</div>
+      <div class="content">
+        <h3>{{ estadisticas.total_grupos }}</h3>
+        <p>Grupos Totales</p>
+        <small>Preescolar a 11°</small>
+      </div>
+    </div>
+
+    <div class="info-card warning">
+      <div class="icon">⏰</div>
+      <div class="content">
+        <h3>{{ estadisticas.horas_asignadas_total }}</h3>
+        <p>Horas Asignadas</p>
+        <small>Promedio: {{ estadisticas.promedio_horas_por_docente }} h/docente</small>
+      </div>
+    </div>
+
+    <div class="info-card info">
+      <div class="icon">✅</div>
+      <div class="content">
+        <h3>{{ estadisticas.total_asignaciones }}</h3>
+        <p>Asignaciones Activas</p>
+        <small>{{ estadisticas.docentes_utilizados }} docentes utilizados</small>
+      </div>
+    </div>
+  </div>
+
+  <div class="features-grid">
+    <div class="feature-card">
+      <h3>🎯 Características Principales</h3>
+      <ul>
+        <li>✅ Sistema de niveles (Básico e Intermedio) para grados 4° a 11°</li>
+        <li>✅ Optimización automática de asignaciones</li>
+        <li>✅ Validación de restricciones (20h máx, 2 grados máx)</li>
+        <li>✅ Cálculo de necesidades de contratación</li>
+        <li>✅ Grupos de ~20 estudiantes por nivel</li>
+        <li>✅ Intensidad horaria: 5h primaria, 4h bachillerato</li>
+      </ul>
+    </div>
+
+    <div class="feature-card" *ngIf="necesidades">
+      <h3>📊 Análisis 2026</h3>
+      <div class="analysis-content">
+        <div class="analysis-item">
+          <strong>Horas totales necesarias:</strong>
+          <span>{{ necesidades.horas_totales_necesarias }}</span>
+        </div>
+        <div class="analysis-item">
+          <strong>Docentes ideales:</strong>
+          <span>{{ necesidades.docentes_ideales }}</span>
+        </div>
+        <div class="analysis-item">
+          <strong>Docentes actuales:</strong>
+          <span>{{ necesidades.docentes_actuales }}</span>
+        </div>
+        <div class="analysis-item highlight" *ngIf="necesidades.deficit_docentes > 0">
+          <strong>⚠️ Acción requerida:</strong>
+          <span>Contratar {{ necesidades.deficit_docentes }} docentes</span>
+        </div>
+        <div class="analysis-item success" *ngIf="necesidades.deficit_docentes === 0">
+          <strong>✅ Estado:</strong>
+          <span>Capacidad suficiente</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="quick-actions">
+    <h3>Acciones Rápidas</h3>
+    <div class="action-buttons">
+      <a routerLink="/docentes" class="action-btn primary">
+        <span class="btn-icon">👥</span>
+        <span class="btn-text">
+          <strong>Gestionar Docentes</strong>
+          <small>Administrar el equipo docente</small>
+        </span>
+      </a>
+
+      <a routerLink="/optimizacion" class="action-btn success">
+        <span class="btn-icon">🚀</span>
+        <span class="btn-text">
+          <strong>Ejecutar Optimización</strong>
+          <small>Optimizar asignaciones automáticamente</small>
+        </span>
+      </a>
+    </div>
+  </div>
+
+  <div class="configuracion-info">
+    <h3>⚙️ Configuración del Sistema</h3>
+    <div class="config-grid">
+      <div class="config-item">
+        <strong>Preescolar a 3°:</strong>
+        <p>Sin niveles (1 docente por grupo)</p>
+      </div>
+      <div class="config-item">
+        <strong>4° a 11°:</strong>
+        <p>2 niveles por grupo (Básico e Intermedio)</p>
+      </div>
+      <div class="config-item">
+        <strong>Intensidad Primaria:</strong>
+        <p>5 horas semanales</p>
+      </div>
+      <div class="config-item">
+        <strong>Intensidad Bachillerato:</strong>
+        <p>4 horas semanales</p>
+      </div>
+      <div class="config-item">
+        <strong>Horas máximas docente:</strong>
+        <p>20 horas semanales</p>
+      </div>
+      <div class="config-item">
+        <strong>Grados máximos:</strong>
+        <p>2 grados diferentes por docente</p>
+      </div>
+    </div>
+  </div>
+</div>

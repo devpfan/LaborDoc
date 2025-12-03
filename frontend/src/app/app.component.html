@@ -1,0 +1,30 @@
+<div class="app-container">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <h1>📚 Gestor de Labor Docente</h1>
+      <p class="subtitle">Sistema de Optimización de Asignaciones 2026</p>
+    </div>
+    <div class="navbar-menu">
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link">
+        📊 Dashboard
+      </a>
+      <a routerLink="/docentes" routerLinkActive="active" class="nav-link">
+        👥 Docentes
+      </a>
+      <a routerLink="/optimizacion" routerLinkActive="active" class="nav-link">
+        🚀 Optimización
+      </a>
+      <a routerLink="/configuracion" routerLinkActive="active" class="nav-link">
+        ⚙️ Configuración
+      </a>
+    </div>
+  </nav>
+
+  <main class="main-content">
+    <router-outlet></router-outlet>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2026 Gestor de Labor Docente - Sistema de Asignación por Niveles</p>
+  </footer>
+</div>

@@ -1,0 +1,99 @@
+<div class="docentes-container">
+  <h2>Gestión de Docentes</h2>
+
+  <!-- Formulario de creación -->
+  <div class="card">
+    <h3>Agregar Nuevo Docente</h3>
+    <form (ngSubmit)="crearDocente()" class="form-docente">
+      <div class="form-group">
+        <label>Nombre:</label>
+        <input type="text" [(ngModel)]="nuevoDocente.nombre" name="nombre" required>
+      </div>
+      
+      <div class="form-group">
+        <label>Tipo:</label>
+        <select [(ngModel)]="nuevoDocente.tipo" name="tipo">
+          <option [value]="TipoDocente.PRIMARIA">Primaria</option>
+          <option [value]="TipoDocente.BACHILLERATO">Bachillerato</option>
+          <option [value]="TipoDocente.AMBOS">Ambos</option>
+        </select>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Agregar Docente</button>
+    </form>
+  </div>
+
+  <!-- Lista de docentes -->
+  <div class="card">
+    <h3>Lista de Docentes ({{ docentes.length }})</h3>
+    <div class="table-responsive">
+      <table class="docentes-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Tipo</th>
+            <th>Horas Asignadas</th>
+            <th>Grados</th>
+            <th>Disponible</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let docente of docentes" [class.editing]="docenteSeleccionado?.id === docente.id">
+            <td>{{ docente.id }}</td>
+            <td>{{ docente.nombre }}</td>
+            <td>
+              <span class="badge" [class.badge-primary]="docente.tipo === TipoDocente.PRIMARIA"
+                                   [class.badge-success]="docente.tipo === TipoDocente.BACHILLERATO"
+                                   [class.badge-info]="docente.tipo === TipoDocente.AMBOS">
+                {{ docente.tipo }}
+              </span>
+            </td>
+            <td>
+              <span class="horas-badge" [class.max-horas]="docente.horas_asignadas >= 20">
+                {{ docente.horas_asignadas }} / 20
+              </span>
+            </td>
+            <td>{{ docente.grados_asignados.join(', ') || 'Sin asignar' }}</td>
+            <td>
+              <span [class.disponible]="docente.disponible" [class.no-disponible]="!docente.disponible">
+                {{ docente.disponible ? '✓' : '✗' }}
+              </span>
+            </td>
+            <td>
+              <button (click)="seleccionarDocente(docente)" class="btn btn-sm btn-info">Editar</button>
+              <button (click)="verAsignaciones(docente.id)" class="btn btn-sm btn-secondary">Asignaciones</button>
+              <button (click)="eliminarDocente(docente.id)" class="btn btn-sm btn-danger">Eliminar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Formulario de edición -->
+  <div class="card" *ngIf="modoEdicion && docenteSeleccionado">
+    <h3>Editar Docente</h3>
+    <form (ngSubmit)="actualizarDocente()" class="form-docente">
+      <div class="form-group">
+        <label>Nombre:</label>
+        <input type="text" [(ngModel)]="docenteSeleccionado.nombre" name="nombre" required>
+      </div>
+      
+      <div class="form-group">
+        <label>Tipo:</label>
+        <select [(ngModel)]="docenteSeleccionado.tipo" name="tipo">
+          <option [value]="TipoDocente.PRIMARIA">Primaria</option>
+          <option [value]="TipoDocente.BACHILLERATO">Bachillerato</option>
+          <option [value]="TipoDocente.AMBOS">Ambos</option>
+        </select>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-success">Guardar Cambios</button>
+        <button type="button" (click)="cancelarEdicion()" class="btn btn-secondary">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>
