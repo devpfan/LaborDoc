@@ -1,0 +1,399 @@
+<div class="ayuda-container">
+  <header class="ayuda-header">
+    <h1>📚 Centro de Ayuda</h1>
+    <p class="subtitle">Guía completa del Sistema de Gestión de Labor Docente</p>
+  </header>
+
+  <div class="ayuda-content">
+    
+    <!-- Introducción -->
+    <section class="ayuda-section">
+      <div class="section-icon">🎯</div>
+      <h2>¿Qué es el Sistema de Gestión de Labor Docente?</h2>
+      <p>
+        Es una herramienta diseñada para optimizar la asignación de docentes en grupos escolares,
+        considerando restricciones de horas máximas, niveles educativos y distribución equilibrada
+        de la carga horaria.
+      </p>
+    </section>
+
+    <!-- Dashboard -->
+    <section class="ayuda-section">
+      <div class="section-icon">🏠</div>
+      <h2>Dashboard (Inicio)</h2>
+      <p>
+        La pantalla principal muestra un resumen ejecutivo del sistema:
+      </p>
+      <ul>
+        <li><strong>Total de Docentes:</strong> Cantidad de profesores registrados en el sistema</li>
+        <li><strong>Total de Grupos:</strong> Número de grupos escolares configurados</li>
+        <li><strong>Asignaciones Actuales:</strong> Grupos que ya tienen docente asignado</li>
+        <li><strong>Horas Asignadas:</strong> Total de horas semanales distribuidas</li>
+      </ul>
+      <div class="tip">
+        <strong>💡 Consejo:</strong> Utiliza el Dashboard para tener una visión rápida del estado del sistema
+        antes de realizar cambios o ejecutar la optimización.
+      </div>
+    </section>
+
+    <!-- Docentes -->
+    <section class="ayuda-section">
+      <div class="section-icon">👥</div>
+      <h2>Gestión de Docentes</h2>
+      
+      <h3>Crear un Docente:</h3>
+      <ol>
+        <li>Haz clic en el botón <strong>"+ Nuevo Docente"</strong></li>
+        <li>Completa el formulario:
+          <ul>
+            <li><strong>Nombre:</strong> Nombre completo del docente</li>
+            <li><strong>Tipo:</strong> Primaria o Bachillerato</li>
+            <li><strong>Disponible:</strong> Si el docente está activo para asignaciones</li>
+          </ul>
+        </li>
+        <li>Haz clic en <strong>"Crear"</strong></li>
+      </ol>
+
+      <h3>Editar un Docente:</h3>
+      <ol>
+        <li>Haz clic en el botón <strong>"✏️ Editar"</strong> junto al docente</li>
+        <li>Modifica los campos necesarios</li>
+        <li>Haz clic en <strong>"Actualizar"</strong></li>
+      </ol>
+
+      <h3>Eliminar un Docente:</h3>
+      <ol>
+        <li>Haz clic en el botón <strong>"🗑️ Eliminar"</strong></li>
+        <li>Confirma la acción</li>
+      </ol>
+
+      <div class="warning">
+        <strong>⚠️ Importante:</strong> Al eliminar un docente, sus asignaciones actuales se perderán.
+        Es recomendable ejecutar la optimización nuevamente después de eliminar docentes.
+      </div>
+
+      <h3>Información de la Tabla:</h3>
+      <ul>
+        <li><strong>Badge Primaria/Bachillerato:</strong> Indica el tipo de docente</li>
+        <li><strong>Horas Asignadas:</strong> Horas semanales actuales del docente</li>
+        <li><strong>Estado:</strong> Disponible (verde) o No disponible (rojo)</li>
+      </ul>
+    </section>
+
+    <!-- Configuración -->
+    <section class="ayuda-section">
+      <div class="section-icon">⚙️</div>
+      <h2>Configuración del Sistema</h2>
+      
+      <p>
+        Permite personalizar los parámetros operativos del colegio. Todos los valores son editables.
+      </p>
+
+      <h3>Parámetros Configurables:</h3>
+      
+      <h4>1. Grupos por Grado (12 grados):</h4>
+      <ul>
+        <li><strong>Preescolar a Tercero:</strong> Sistema sin niveles (1 docente por grupo)</li>
+        <li><strong>Cuarto a Undécimo:</strong> Sistema con niveles (Básico + Intermedio)</li>
+      </ul>
+
+      <h4>2. Intensidad Horaria:</h4>
+      <ul>
+        <li><strong>Primaria:</strong> Horas semanales por grupo (por defecto: 5h)</li>
+        <li><strong>Bachillerato:</strong> Horas semanales por grupo (por defecto: 4h)</li>
+      </ul>
+
+      <h4>3. Restricciones de Docentes:</h4>
+      <ul>
+        <li><strong>Horas máximas por docente:</strong> Límite semanal (por defecto: 20h)</li>
+        <li><strong>Estudiantes por grupo/nivel:</strong> Para dividir en niveles (por defecto: 20)</li>
+      </ul>
+
+      <h3>Validación Automática:</h3>
+      <p>
+        El sistema valida la configuración y muestra:
+      </p>
+      <ul>
+        <li>✅ <strong>Válida:</strong> Configuración correcta</li>
+        <li>❌ <strong>Inválida:</strong> Hay errores críticos (valores negativos, ceros)</li>
+        <li>⚠️ <strong>Advertencias:</strong> Posibles problemas (ej: faltan docentes)</li>
+      </ul>
+
+      <div class="warning">
+        <strong>⚠️ Muy Importante:</strong> Al modificar la configuración:
+        <ul>
+          <li>Se eliminarán TODAS las asignaciones actuales</li>
+          <li>Los grupos se regenerarán según los nuevos números</li>
+          <li>Deberás ejecutar la optimización nuevamente</li>
+        </ul>
+      </div>
+
+      <h3>Cómo Editar la Configuración:</h3>
+      <ol>
+        <li>Haz clic en <strong>"✏️ Editar Configuración"</strong></li>
+        <li>Modifica los valores necesarios en el formulario</li>
+        <li>Revisa el total de grupos calculado automáticamente</li>
+        <li>Haz clic en <strong>"💾 Guardar Cambios"</strong></li>
+        <li>El sistema regenerará los grupos y limpiará asignaciones</li>
+      </ol>
+
+      <h3>Resetear a Valores por Defecto:</h3>
+      <ol>
+        <li>Haz clic en <strong>"🔄 Resetear a Valores por Defecto"</strong></li>
+        <li>Confirma la acción</li>
+        <li>La configuración volverá a los valores iniciales del sistema</li>
+      </ol>
+    </section>
+
+    <!-- Optimización -->
+    <section class="ayuda-section">
+      <div class="section-icon">🚀</div>
+      <h2>Optimización de Asignaciones</h2>
+      
+      <p>
+        La optimización automática distribuye los grupos entre los docentes disponibles,
+        respetando todas las restricciones configuradas.
+      </p>
+
+      <h3>Restricciones que Respeta:</h3>
+      <ul>
+        <li>✅ Máximo 20 horas semanales por docente (configurable)</li>
+        <li>✅ Máximo 2 grados diferentes por docente</li>
+        <li>✅ Docentes de primaria solo en grupos de primaria</li>
+        <li>✅ Docentes de bachillerato solo en grupos de bachillerato</li>
+        <li>✅ Solo docentes marcados como "Disponibles"</li>
+      </ul>
+
+      <h3>Cómo Ejecutar la Optimización:</h3>
+      <ol>
+        <li>Ve a la sección <strong>"🚀 Optimización"</strong></li>
+        <li>Haz clic en <strong>"▶️ Ejecutar Optimización"</strong></li>
+        <li>El algoritmo procesará las asignaciones (tarda unos segundos)</li>
+        <li>Revisa los resultados mostrados</li>
+      </ol>
+
+      <h3>Interpretación de Resultados:</h3>
+      
+      <h4>Resumen:</h4>
+      <ul>
+        <li><strong>Grupos Asignados:</strong> Cantidad de grupos que tienen docente</li>
+        <li><strong>Grupos Sin Asignar:</strong> Grupos que no pudieron ser asignados</li>
+        <li><strong>Docentes Utilizados:</strong> Profesores con al menos una asignación</li>
+        <li><strong>Docentes Sin Usar:</strong> Profesores disponibles pero sin asignaciones</li>
+      </ul>
+
+      <h4>Distribución por Docente:</h4>
+      <p>Tabla detallada que muestra para cada docente:</p>
+      <ul>
+        <li><strong>Nombre</strong></li>
+        <li><strong>Tipo:</strong> Primaria o Bachillerato</li>
+        <li><strong>Grupos Asignados:</strong> Cantidad de grupos</li>
+        <li><strong>Horas Totales:</strong> Suma de horas semanales</li>
+        <li><strong>Grados:</strong> Lista de grados donde enseña</li>
+      </ul>
+
+      <div class="tip">
+        <strong>💡 Consejo:</strong> Si hay grupos sin asignar, considera:
+        <ul>
+          <li>Agregar más docentes al sistema</li>
+          <li>Aumentar las horas máximas por docente en Configuración</li>
+          <li>Marcar más docentes como "Disponibles"</li>
+        </ul>
+      </div>
+
+      <h3>Grupos Sin Asignar:</h3>
+      <p>
+        Si después de la optimización quedan grupos sin asignar, se mostrará una lista con:
+      </p>
+      <ul>
+        <li>Grado del grupo</li>
+        <li>Nivel (si aplica)</li>
+        <li>Número de grupo</li>
+      </ul>
+      <p>
+        Esto indica que no hay suficientes docentes disponibles o que las restricciones
+        son muy estrictas para asignar todos los grupos.
+      </p>
+    </section>
+
+    <!-- Sistema de Niveles -->
+    <section class="ayuda-section">
+      <div class="section-icon">📊</div>
+      <h2>Sistema de Niveles</h2>
+      
+      <p>
+        Los grados 4° a 11° utilizan un sistema de niveles que divide a los estudiantes
+        en grupos más pequeños según su rendimiento o capacidad.
+      </p>
+
+      <h3>¿Cómo Funciona?</h3>
+      <ul>
+        <li>Si un grado tiene <strong>40+ estudiantes</strong>, se divide en:
+          <ul>
+            <li>✅ Nivel Básico</li>
+            <li>✅ Nivel Intermedio</li>
+          </ul>
+        </li>
+        <li>Cada nivel tiene aproximadamente <strong>20 estudiantes</strong> (configurable)</li>
+        <li>Cada nivel requiere su propio docente</li>
+      </ul>
+
+      <h3>Ejemplo:</h3>
+      <div class="example">
+        <strong>Séptimo grado con 10 grupos (configuración por defecto):</strong>
+        <ul>
+          <li>10 grupos × 40 estudiantes = 400 estudiantes</li>
+          <li>400 ÷ 20 = 20 grupos-nivel</li>
+          <li>10 en Nivel Básico + 10 en Nivel Intermedio</li>
+          <li>Total: 20 asignaciones de docentes necesarias</li>
+        </ul>
+      </div>
+
+      <h3>Grados SIN Niveles:</h3>
+      <ul>
+        <li>Preescolar</li>
+        <li>Primero</li>
+        <li>Segundo</li>
+        <li>Tercero</li>
+      </ul>
+      <p>Estos grados mantienen la estructura tradicional: 1 docente por grupo.</p>
+    </section>
+
+    <!-- Buenas Prácticas -->
+    <section class="ayuda-section">
+      <div class="section-icon">✨</div>
+      <h2>Buenas Prácticas</h2>
+      
+      <h3>1. Orden Recomendado de Uso:</h3>
+      <ol>
+        <li>📊 Revisar <strong>Dashboard</strong> para conocer el estado actual</li>
+        <li>⚙️ Configurar parámetros del colegio en <strong>Configuración</strong></li>
+        <li>👥 Registrar todos los docentes en <strong>Docentes</strong></li>
+        <li>🚀 Ejecutar la <strong>Optimización</strong></li>
+        <li>📈 Revisar resultados y ajustar si es necesario</li>
+      </ol>
+
+      <h3>2. Antes de Iniciar un Nuevo Año Escolar:</h3>
+      <ul>
+        <li>✅ Actualizar la configuración de grupos por grado</li>
+        <li>✅ Revisar lista de docentes (agregar nuevos, marcar no disponibles)</li>
+        <li>✅ Ajustar intensidades horarias si cambiaron</li>
+        <li>✅ Ejecutar optimización con la nueva configuración</li>
+      </ul>
+
+      <h3>3. Si Cambias la Configuración:</h3>
+      <ul>
+        <li>⚠️ Todas las asignaciones se eliminarán</li>
+        <li>🔄 Los grupos se regenerarán</li>
+        <li>🚀 Debes ejecutar la optimización nuevamente</li>
+      </ul>
+
+      <h3>4. Si Agregas/Eliminas Docentes:</h3>
+      <ul>
+        <li>✅ Ejecuta la optimización de nuevo para redistribuir la carga</li>
+        <li>✅ Revisa que no queden grupos sin asignar</li>
+      </ul>
+    </section>
+
+    <!-- Solución de Problemas -->
+    <section class="ayuda-section">
+      <div class="section-icon">🔧</div>
+      <h2>Solución de Problemas Comunes</h2>
+      
+      <h3>❌ "Muchos grupos sin asignar después de optimizar"</h3>
+      <p><strong>Causas posibles:</strong></p>
+      <ul>
+        <li>No hay suficientes docentes registrados</li>
+        <li>Muchos docentes marcados como "No disponibles"</li>
+        <li>Horas máximas por docente muy restrictivas</li>
+      </ul>
+      <p><strong>Solución:</strong></p>
+      <ul>
+        <li>➕ Agregar más docentes</li>
+        <li>✅ Marcar más docentes como disponibles</li>
+        <li>⚙️ Aumentar horas máximas en Configuración</li>
+      </ul>
+
+      <h3>❌ "La configuración muestra advertencias"</h3>
+      <p><strong>Interpretación:</strong></p>
+      <ul>
+        <li>⚠️ Advertencia: No es crítico, pero debes revisar</li>
+        <li>❌ Error: Debes corregir antes de guardar</li>
+      </ul>
+      <p><strong>Ejemplo común:</strong> "Se necesitan 22 docentes pero solo hay 21 registrados"</p>
+      <p><strong>Solución:</strong> Agregar más docentes o reducir grupos</p>
+
+      <h3>❌ "No puedo eliminar un docente"</h3>
+      <p><strong>Causa:</strong> Probablemente el docente tiene asignaciones activas</p>
+      <p><strong>Solución:</strong></p>
+      <ol>
+        <li>Eliminar sus asignaciones primero</li>
+        <li>O ejecutar optimización después de eliminarlo</li>
+      </ol>
+
+      <h3>❌ "Los cambios en configuración no se reflejan"</h3>
+      <p><strong>Solución:</strong></p>
+      <ul>
+        <li>Asegúrate de hacer clic en <strong>"💾 Guardar Cambios"</strong></li>
+        <li>Ejecuta la optimización nuevamente</li>
+        <li>Recarga la página si es necesario</li>
+      </ul>
+    </section>
+
+    <!-- Glosario -->
+    <section class="ayuda-section">
+      <div class="section-icon">📖</div>
+      <h2>Glosario de Términos</h2>
+      
+      <dl class="glossary">
+        <dt>Asignación</dt>
+        <dd>Relación entre un docente y un grupo específico que debe enseñar.</dd>
+
+        <dt>Intensidad Horaria</dt>
+        <dd>Número de horas semanales que un grupo requiere de un docente.</dd>
+
+        <dt>Grupo</dt>
+        <dd>Conjunto de estudiantes organizados por grado y nivel.</dd>
+
+        <dt>Nivel</dt>
+        <dd>División de estudiantes dentro de un grado (Básico o Intermedio).</dd>
+
+        <dt>Carga Horaria</dt>
+        <dd>Total de horas semanales asignadas a un docente.</dd>
+
+        <dt>Optimización</dt>
+        <dd>Proceso automático de asignar docentes a grupos respetando todas las restricciones.</dd>
+
+        <dt>Disponibilidad</dt>
+        <dd>Estado que indica si un docente puede recibir asignaciones o no.</dd>
+
+        <dt>Restricción</dt>
+        <dd>Regla que debe cumplirse en las asignaciones (ej: máximo 20h por docente).</dd>
+      </dl>
+    </section>
+
+    <!-- Contacto/Soporte -->
+    <section class="ayuda-section last-section">
+      <div class="section-icon">💬</div>
+      <h2>¿Necesitas más ayuda?</h2>
+      
+      <p>
+        Si no encuentras la respuesta a tu pregunta en esta guía, puedes:
+      </p>
+      
+      <ul>
+        <li>📧 Contactar al administrador del sistema</li>
+        <li>📝 Reportar problemas en el repositorio del proyecto</li>
+        <li>💡 Sugerir mejoras o nuevas funcionalidades</li>
+      </ul>
+
+      <div class="info-box">
+        <h3>Información del Sistema</h3>
+        <p><strong>Versión:</strong> 1.0.0</p>
+        <p><strong>Última actualización:</strong> Diciembre 2025</p>
+        <p><strong>Desarrollado con:</strong> Angular 19 + Python FastAPI</p>
+      </div>
+    </section>
+
+  </div>
+</div>
