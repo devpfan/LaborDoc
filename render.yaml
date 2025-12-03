@@ -1,0 +1,45 @@
+# Render.com Deploy Configuration
+# https://render.com
+
+services:
+  # Backend API (FastAPI)
+  - type: web
+    name: labordoc-backend
+    env: python
+    region: oregon
+    plan: free
+    branch: main
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/docentes
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.0
+      - key: ENVIRONMENT
+        value: production
+    
+  # Frontend (Angular)
+  - type: web
+    name: labordoc-frontend
+    env: static
+    region: oregon
+    plan: free
+    branch: main
+    rootDir: frontend
+    buildCommand: npm install && npm run build -- --configuration production
+    staticPublishPath: dist/gestor-labor-docente-frontend
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    headers:
+      - path: /*
+        name: Cache-Control
+        value: public, max-age=0, must-revalidate
+      - path: /assets/*
+        name: Cache-Control
+        value: public, max-age=31536000, immutable
+
+# Para desarrollo (rama develop)
+# Duplicar configuración y cambiar branch a 'develop'

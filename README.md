@@ -284,26 +284,41 @@ Este proyecto es de código abierto y está disponible bajo la licencia MIT.
 
 El proyecto incluye pipelines automatizados de GitHub Actions:
 
-- **`main`** → Despliegue automático a **Producción**
-- **`develop`** → Despliegue automático a **Desarrollo**
-- **Pull Requests** → Tests y linting automáticos
+### Estrategia de Ramas:
+- **`develop`** → Desarrollo local + Tests automáticos en cada push
+- **`main`** → Producción (deploy automático)
+
+### Workflow de Desarrollo:
+```bash
+# 1. Trabajar en develop localmente
+git checkout develop
+# ... hacer cambios ...
+git add .
+git commit -m "feat: nueva funcionalidad"
+git push origin develop  # ✅ Se ejecutan tests automáticos
+
+# 2. Cuando esté listo para producción
+git checkout main
+git merge develop
+git push origin main     # 🚀 Deploy automático a producción
+```
 
 ### Workflows Configurados:
-- ✅ Tests y linting (CI)
-- ✅ Build automático
-- ✅ Despliegue a servidores VPS
-- ✅ Soporte para Docker
-- ✅ Escaneo de seguridad
+- ✅ **develop**: Tests y build en cada push
+- ✅ **main**: Build + Deploy automático a producción
+- ✅ **Pull Requests**: Tests y linting
 
-Ver [DEPLOYMENT.md](DEPLOYMENT.md) para guía completa de configuración.
+### Plataformas de Deploy Gratuitas:
+- **Render.com** (Recomendado) - `render.yaml` incluido
+- **Railway.app** - Auto-detección
+- **Vercel** (frontend) + **PythonAnywhere** (backend)
+
+Ver [DEPLOY_FREE.md](DEPLOY_FREE.md) para guía completa de despliegue gratuito.
 
 ### Despliegue Rápido con Docker:
 ```bash
 # Producción
 docker-compose -f docker-compose.prod.yml up -d
-
-# Desarrollo
-docker-compose -f docker-compose.dev.yml up -d
 ```
 
 ## 👥 Contacto

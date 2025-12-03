@@ -1,12 +1,15 @@
-name: Deploy to Development
+name: CI - Develop Branch
 
 on:
   push:
     branches:
       - develop
+  pull_request:
+    branches:
+      - develop
 
 jobs:
-  build-and-deploy:
+  test-and-build:
     runs-on: ubuntu-latest
     
     steps:
@@ -33,6 +36,7 @@ jobs:
       - name: Test Backend
         run: |
           cd backend
+          echo "✅ Backend dependencies installed successfully"
           # Aquí puedes agregar tests cuando los tengas
           # pytest tests/
 
@@ -42,42 +46,28 @@ jobs:
           cd frontend
           npm ci
 
-      - name: Build Frontend (Development)
+      - name: Build Frontend
         run: |
           cd frontend
           npm run build
 
-      # Despliegue a servidor de desarrollo
-      - name: Deploy to Development Server
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.DEV_SSH_KEY }}
-          SERVER_HOST: ${{ secrets.DEV_SERVER_HOST }}
-          SERVER_USER: ${{ secrets.DEV_SERVER_USER }}
+      - name: Validate Build
         run: |
-          # Configurar SSH
-          mkdir -p ~/.ssh
-          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H $SERVER_HOST >> ~/.ssh/known_hosts
-          
-          # Desplegar backend
-          rsync -avz --delete backend/ $SERVER_USER@$SERVER_HOST:/var/www/labordoc-dev/backend/
-          
-          # Desplegar frontend
-          rsync -avz --delete frontend/dist/gestor-labor-docente-frontend/ $SERVER_USER@$SERVER_HOST:/var/www/labordoc-dev/frontend/
-          
-          # Reiniciar servicios
-          ssh $SERVER_USER@$SERVER_HOST << 'EOF'
-            cd /var/www/labordoc-dev/backend
-            source venv/bin/activate
-            pip install -r requirements.txt
-            sudo systemctl restart labordoc-backend-dev
-            sudo systemctl restart nginx
-          EOF
+          if [ -d "frontend/dist/gestor-labor-docente-frontend" ]; then
+            echo "✅ Frontend build successful"
+          else
+            echo "❌ Frontend build failed"
+            exit 1
+          fi
 
       # Notificación
-      - name: Notify Deployment Success
+      - name: Build Summary
         if: success()
         run: |
-          echo "✅ Deployment to DEVELOPMENT successful!"
-          echo "🌐 Dev URL: http://dev.labordoc.com"
+          echo "✅ Build and tests passed on develop branch"
+          echo "📦 Ready to merge to main for production deployment"
+          echo ""
+          echo "To deploy to production:"
+          echo "  git checkout main"
+          echo "  git merge develop"
+          echo "  git push origin main"

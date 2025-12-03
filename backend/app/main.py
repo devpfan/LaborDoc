@@ -9,9 +9,19 @@ app = FastAPI(
 )
 
 # Configuración CORS para Angular
+# Agregar tus URLs de producción después del deploy
+origins = [
+    "http://localhost:4200",  # Desarrollo local
+    "http://localhost:3000",
+    # Agregar después del deploy:
+    # "https://labordoc-frontend.onrender.com",
+    # "https://labordoc.vercel.app",
+    # "https://labordoc-frontend.up.railway.app",
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:4200"],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
