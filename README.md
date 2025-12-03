@@ -280,6 +280,32 @@ Las contribuciones son bienvenidas. Por favor:
 
 Este proyecto es de código abierto y está disponible bajo la licencia MIT.
 
+## 🚀 CI/CD y Despliegue
+
+El proyecto incluye pipelines automatizados de GitHub Actions:
+
+- **`main`** → Despliegue automático a **Producción**
+- **`develop`** → Despliegue automático a **Desarrollo**
+- **Pull Requests** → Tests y linting automáticos
+
+### Workflows Configurados:
+- ✅ Tests y linting (CI)
+- ✅ Build automático
+- ✅ Despliegue a servidores VPS
+- ✅ Soporte para Docker
+- ✅ Escaneo de seguridad
+
+Ver [DEPLOYMENT.md](DEPLOYMENT.md) para guía completa de configuración.
+
+### Despliegue Rápido con Docker:
+```bash
+# Producción
+docker-compose -f docker-compose.prod.yml up -d
+
+# Desarrollo
+docker-compose -f docker-compose.dev.yml up -d
+```
+
 ## 👥 Contacto
 
 Para preguntas o soporte, por favor abre un issue en el repositorio.

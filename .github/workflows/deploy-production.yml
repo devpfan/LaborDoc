@@ -1,0 +1,101 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # Backend
+      - name: Install Python dependencies
+        run: |
+          cd backend
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Test Backend
+        run: |
+          cd backend
+          # Aquí puedes agregar tests cuando los tengas
+          # pytest tests/
+
+      # Frontend
+      - name: Install Node dependencies
+        run: |
+          cd frontend
+          npm ci
+
+      - name: Build Frontend (Production)
+        run: |
+          cd frontend
+          npm run build -- --configuration production
+
+      # Despliegue - Opción 1: Servidor VPS/Cloud
+      - name: Deploy to Production Server
+        if: github.ref == 'refs/heads/main'
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.PROD_SSH_KEY }}
+          SERVER_HOST: ${{ secrets.PROD_SERVER_HOST }}
+          SERVER_USER: ${{ secrets.PROD_SERVER_USER }}
+        run: |
+          # Configurar SSH
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H $SERVER_HOST >> ~/.ssh/known_hosts
+          
+          # Desplegar backend
+          rsync -avz --delete backend/ $SERVER_USER@$SERVER_HOST:/var/www/labordoc-prod/backend/
+          
+          # Desplegar frontend
+          rsync -avz --delete frontend/dist/gestor-labor-docente-frontend/ $SERVER_USER@$SERVER_HOST:/var/www/labordoc-prod/frontend/
+          
+          # Reiniciar servicios
+          ssh $SERVER_USER@$SERVER_HOST << 'EOF'
+            cd /var/www/labordoc-prod/backend
+            source venv/bin/activate
+            pip install -r requirements.txt
+            sudo systemctl restart labordoc-backend
+            sudo systemctl restart nginx
+          EOF
+
+      # Despliegue - Opción 2: Docker Registry
+      - name: Build and Push Docker Images
+        if: false  # Cambiar a true si usas Docker
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        run: |
+          echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
+          
+          # Backend
+          docker build -t devpfan/labordoc-backend:latest ./backend
+          docker push devpfan/labordoc-backend:latest
+          
+          # Frontend
+          docker build -t devpfan/labordoc-frontend:latest ./frontend
+          docker push devpfan/labordoc-frontend:latest
+
+      # Notificación
+      - name: Notify Deployment Success
+        if: success()
+        run: |
+          echo "✅ Deployment to PRODUCTION successful!"
+          # Aquí puedes agregar notificaciones a Slack, Discord, etc.

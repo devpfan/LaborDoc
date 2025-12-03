@@ -1,0 +1,83 @@
+name: Deploy to Development
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # Backend
+      - name: Install Python dependencies
+        run: |
+          cd backend
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Test Backend
+        run: |
+          cd backend
+          # Aquí puedes agregar tests cuando los tengas
+          # pytest tests/
+
+      # Frontend
+      - name: Install Node dependencies
+        run: |
+          cd frontend
+          npm ci
+
+      - name: Build Frontend (Development)
+        run: |
+          cd frontend
+          npm run build
+
+      # Despliegue a servidor de desarrollo
+      - name: Deploy to Development Server
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.DEV_SSH_KEY }}
+          SERVER_HOST: ${{ secrets.DEV_SERVER_HOST }}
+          SERVER_USER: ${{ secrets.DEV_SERVER_USER }}
+        run: |
+          # Configurar SSH
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H $SERVER_HOST >> ~/.ssh/known_hosts
+          
+          # Desplegar backend
+          rsync -avz --delete backend/ $SERVER_USER@$SERVER_HOST:/var/www/labordoc-dev/backend/
+          
+          # Desplegar frontend
+          rsync -avz --delete frontend/dist/gestor-labor-docente-frontend/ $SERVER_USER@$SERVER_HOST:/var/www/labordoc-dev/frontend/
+          
+          # Reiniciar servicios
+          ssh $SERVER_USER@$SERVER_HOST << 'EOF'
+            cd /var/www/labordoc-dev/backend
+            source venv/bin/activate
+            pip install -r requirements.txt
+            sudo systemctl restart labordoc-backend-dev
+            sudo systemctl restart nginx
+          EOF
+
+      # Notificación
+      - name: Notify Deployment Success
+        if: success()
+        run: |
+          echo "✅ Deployment to DEVELOPMENT successful!"
+          echo "🌐 Dev URL: http://dev.labordoc.com"
